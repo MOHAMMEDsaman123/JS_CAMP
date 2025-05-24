@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+   
+</head>
+
+<body>
+    <button class="rock" >Rock</button>
+    <button class="paper">Paper</button>
+    <button class="scissors">Scissors</button>
+    <p id="result"></p>
+    <p id="res"></p>
+    <p id="re"></p>
+    <button onclick="
+        obj.win=0;
+        obj.lose=0;
+        obj.tie=0;
+        update();
+        localStorage.getItem('result')
+        
+        
+       
+        
+        ">Reset</button>
+        
+        <button onclick="auto()">Auto</button>
+    <script>
+       let obj = JSON.parse(localStorage.getItem('result')) || { win: 0, lose: 0, tie: 0 };
+       console.log(obj)
+
+       let rock=document.querySelector('.rock')
+       rock.addEventListener('click',()=>{
+        playGame('rock');
+       })
+       let paper=document.querySelector('.paper')
+       paper.addEventListener('click',()=>{
+        playGame('paper');
+       })
+       let scissors=document.querySelector('.scissors')
+       scissors.addEventListener('click',()=>{
+        playGame('scissors');
+       })
+       
+
+        document.querySelector('#re').innerHTML = `Wins: ${obj.win} Losses: ${obj.lose} Ties: ${obj.tie}`;
+ let autoPlay = false;
+        let id;
+        let result = '';
+        function computer() {
+            let choices = ['rock', 'paper', 'scissors'];
+            let randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        document.body.addEventListener('keydown',(event)=>{
+            if(event.key==='r'){
+                playGame('rock')
+
+            }
+            else if(event.key==='p'){
+                playGame('paper')
+
+            }
+            else if(event.key==='s'){
+                playGame('scissors')
+
+            }
+            else if(event.key==='a'){
+                auto()
+
+            }
+
+        })
+       
+        function auto(){
+            if(!autoPlay){
+                id=setInterval(()=>{
+                let comp=computer();
+                playGame(comp);
+                autoPlay=true;
+                
+
+            },1000);
+            
+        }
+        else{
+            clearInterval(id);
+            autoPlay=false;
+        }
+            
+        }
+        function update() {
+            document.querySelector('#re').innerHTML = `Wins: ${obj.win} Losses: ${obj.lose} Ties: ${obj.tie}`;
+
+        }
+
+        function playGame(user) {
+            let computerChoice = computer();
+            if (user === 'rock') {
+                if (user === computerChoice) {
+                    result = 'It\'s a tie!';
+                }
+                else if (user === 'rock' && computerChoice === 'scissors') {
+                    result = 'You win!';
+                }
+                else if (user === 'rock' && computerChoice === 'paper') {
+                    result = 'You lose!';
+                }
+                else {
+                    result = 'Ivalid choice';
+                }
+                document.getElementById('result').innerText = `${result}`;
+            }
+            else if (user === 'paper') {
+                if (user === computerChoice) {
+                    result = 'It\'s a tie!';
+                }
+                else if (user === 'paper' && computerChoice === 'rock') {
+                    result = 'You win!';
+                }
+                else if (user === 'paper' && computerChoice === 'scissors') {
+                    result = 'You lose!';
+                }
+                else {
+                    result = 'Ivalid choice';
+                }
+                document.getElementById('result').innerText = `${result}`;
+            }
+            else if (user === 'scissors') {
+                if (user === computerChoice) {
+                    result = 'It\'s a tie!';
+                }
+                else if (user === 'scissors' && computerChoice === 'paper') {
+                    result = 'You win!';
+                }
+                else if (user === 'scissors' && computerChoice === 'rock') {
+                    result = 'You lose!';
+                }
+                else {
+                    result = 'Ivalid choice';
+                }
+                document.getElementById('result').innerText = `${result}`;
+            }
+            if (result === 'You win!') {
+                obj.win++;
+            }
+            else if (result === 'You lose!') {
+                obj.lose++;
+            }
+            else if (result === 'It\'s a tie!') {
+                obj.tie++;
+            }
+
+            localStorage.setItem('result', JSON.stringify(obj));
+            document.querySelector('#res').innerText = `You ${user} vs Computer ${computerChoice}`;
+
+            update();
+
+
+
+
+        }
+    </script>
+</body>
+
+</html>

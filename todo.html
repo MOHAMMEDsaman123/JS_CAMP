@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <input type="text" name="" id="todo" placeholder="Add a new task">
+        <button id="add" onclick="add()">Add</button>
+        <button id="remove" onclick="remove()">Remove</button>
+        <div class="js-div"></div>
+
+        <script>
+            
+            let all=JSON.parse(localStorage.getItem('task')) || [];
+            fst();  
+           
+            
+            function fst(){
+                let total='';
+               
+                for(let i=0;i<all.length;i++){
+                    let value=all[i];
+                    let html=`<p>${value}</p>`;
+                    total+=html;
+                    
+                   
+                    
+                }
+                
+               
+                document.querySelector('.js-div').innerHTML=`${total}`;
+                
+                
+
+            }
+            
+            
+            function add(){
+                 let task=document.querySelector('#todo').value;
+                  all.push(task); 
+                  document.querySelector('#todo').value='';
+                  
+                  
+                 
+                
+              
+                fst();  
+                
+               
+
+                    
+                }
+                function remove(){
+                    
+                   let task=document.querySelector('#todo').value;
+                   
+                   
+                   let index=all.splice(task,1)
+                   
+                   
+                   
+                   document.querySelector('.js-div').innerHTML=all
+
+                   
+
+                }
+                window.onunload=function(){
+                    localStorage.setItem('task',JSON.stringify(all));
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+       
+            
+        </script>
+    </body>
+
+</html>

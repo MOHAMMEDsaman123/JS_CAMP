@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div>
+        <h1>Amazon Shipping Calci</h1>
+        <h5>Order Under $50=+$10 Shipping</h5>
+        <h5>Order Over $50= Free Shipping</h5>
+        <input type="text" placeholder="Enter Order Amount" id="order" required>
+        <button onclick="calci()">Calculate</button>
+        <p id="result">Total Fee</p>
+    </div>
+    <script>
+        
+        let Shippingfee = 10;
+
+        let total = 0;
+
+        function calci() {
+            let orderamount = document.querySelector('#order').value;
+            if (orderamount <= 50) {
+                total = parseInt(orderamount) + Shippingfee;
+                document.querySelector('#result').innerHTML = `Total Fee: ${total}`;
+            }
+            else if (orderamount > 50) {
+                total = parseInt(orderamount);
+                document.querySelector('#result').innerHTML = `Total Fee: ${total}`;
+            }
+            else {
+                document.getElementById('result').innerHTML = `Invalid Input`;
+            }
+
+        }
+
+
+
+    </script>
+</body>
+
+</html>

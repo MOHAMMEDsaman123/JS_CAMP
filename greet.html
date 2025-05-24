@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" href="styles.css">
+    </head>
+    
+    <body>
+        <button class="hi" onclick="
+       change();
+        ">subscribe</button>
+        <script>
+            /*
+            function greet(name){
+                document.body.innerHTML = `welcome to my website ${name }`;
+            }
+            greet("boss");    
+
+            function far(unit){
+               let farenheit = (celcius * 9/5) + 32;
+                document.body.innerHTML = `The temperature in farenheit is ${farenheit}`;
+                let farenheit1 = (unit-32 )*5/9;
+                document.body.innerHTML = `The temperature in farenheit is ${farenheit1}C`;
+            }
+            far(86);
+
+            function convert(length,from,to){
+                if(from==='km'&&to==='m'){
+                    let res=length/1.6;
+                    document.body.innerHTML = `The length in ${to} is ${res}`;
+                }
+                else if(from==='m'&&to==='km')
+                {
+                    let res=length*1.6;
+                    document.body.innerHTML = `The length in ${to} is ${res}`;
+                }
+                
+                else if (from==to){
+                    document.body.innerHTML=`The length in ${to} is ${length}`;
+                    
+
+                }
+                else if (from==='km' && to==='ft'){
+                    let res=length * 3281;
+                    document.body.innerHTML=`The length in ${to} is ${res}`;
+                    
+
+                }
+                else if (from==='m' && to==='ft'){
+                    let res=length * 5280;
+                    document.body.innerHTML=`The length in ${to} is ${res}`;
+                    
+
+                }
+                else{
+                    document.body.innerHTML=`invlid conversion to ${to}`;
+                }
+
+                
+
+            }
+            convert(32,'km','m');
+            convert(5,'m','ft');
+            convert(5,'kmm','km');
+
+            
+                const object={
+                    name:'boss',
+                    age:23,
+                    fun(){
+                    document.body.innerHTML=`hi`;
+                    
+
+                }
+                    
+                };
+                object.fun();
+                console.log(object);
+                console.log(JSON.stringify(object));
+                const js=JSON.stringify(object);    
+                console.log(JSON.parse(js));    
+                object1={
+                    msg:'hello',
+                }
+                const {msg}=object1;
+
+                const object2={
+                    msg
+                }
+                console.log(object2);
+                 */
+              // document.body.innerHTML='<button>Click me</button>';
+               //document.querySelector('button').innerHTML='helloooooooooo';
+               console.log(document.querySelector('.hi'));
+            
+        function change(){
+           let change= document.querySelector('.hi').innerHTML;
+           if(change==='subscribe'){
+            document.querySelector('.hi').innerHTML='subscribed';
+           }
+           else{
+            document.querySelector('.hi').innerHTML='subscribe';
+           }
+        }
+            
+            
+           
+            
+            
+
+        </script>
+        
+    </body>
+</html>

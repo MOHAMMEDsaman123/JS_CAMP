@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        calculator
+    </title>
+    <style>
+        body {
+            background-color: #000000;
+            font-family: Arial, sans-serif;
+        }
+
+        .main {
+            color: white;
+            text-align: center;
+
+
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: 2px solid #ffffff;
+            height: 90px;
+            width: 90px;
+            font-weight: bold;
+            border-radius: 90px;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+
+
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .op {
+            background-color: orange;
+            color: black;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>calculator</h1>
+        <div>
+            <h5 id="result"></h5>
+        </div>
+        <div class="div1">
+            <button onclick="calci('1')">1</button>
+            <button onclick="calci('2')">2</button>
+            <button onclick="calci('3')">3</button>
+            <button onclick="calci('+')" class="op">+</button>
+
+        </div>
+        <div class="div2">
+            <button onclick="calci('4')">4</button>
+            <button onclick="calci('5')">5</button>
+            <button onclick="calci('6')">6</button>
+            <button onclick="calci('-')" class="op">-</button>
+
+        </div>
+        <div class="div3">
+            <button onclick="calci('7')">7</button>
+            <button onclick="calci('8')">8</button>
+            <button onclick="calci('9')">9</button>
+            <button onclick="calci('*')" class="op">*</button>
+
+        </div>
+        <div class="div4">
+            <button onclick="calci('0')">0</button>
+            <button onclick="calci('.')">.</button>
+            <button onclick="calci('/')">/</button>
+            <button onclick="out('=')" class="op">=</button>
+
+        </div>
+        <div class="div5">
+            <button onclick="let res= calculator=''
+            document.getElementById('result').innerHTML=`${res}`"
+            >Clr</button>
+
+        </div>
+
+
+
+    </div>
+    <script>
+        let calculator='';
+        
+
+        function calci(value){
+            calculator+=value;
+            document.getElementById('result').innerHTML=`Result: ${calculator}`;
+        }
+        function out(){
+            result=eval(calculator);
+            document.getElementById('result').innerHTML=`Result: ${result}`;
+            localStorage.setItem('result', result); 
+            
+
+        }
+        window.onload=function(){
+            
+            let storedResult = (localStorage.getItem('result'));
+            if (storedResult) {
+                document.getElementById('result').innerHTML = `Stored Result: ${storedResult}`;
+            } else {
+                document.getElementById('result').innerHTML = 'No result stored';
+            }
+        }
+       
+
+    </script>
+
+
+</body>
+
+</html>

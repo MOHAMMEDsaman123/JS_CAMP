@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Todo-list Assignment</title>
+</head>
+<style>
+  body {
+    background-color: rgba(0, 0, 0, 0.886);
+    font-family: Arial, sans-serif;
+    color: white;
+  }
+
+  .form {
+    display: grid;
+    grid-template-columns: 170px 200px 180px 180px 100px 100px 100px;
+    gap: 10px;
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .form2 {
+    display: grid;
+    grid-template-columns: 100px 170px 200px 180px 180px 100px 100px 100px;
+    gap: 10px;
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .form2 {
+    text-align: center;
+  }
+
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #7f7e8f;
+    background-color: transparent;
+    color: white;
+    font-size: 12px;
+
+    gap: 10px;
+  }
+
+  .del button {
+    background-color: rgb(232, 12, 78);
+
+    color: rgb(247, 247, 247);
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+    cursor: pointer;
+  }
+
+  select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #7f7e8f;
+    background-color: transparent;
+    color: white;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+
+  option {
+    background-color: orange;
+    color: rgb(17, 16, 16);
+  }
+
+  .edit button {
+    background-color: rgb(71, 34, 219);
+    color: white;
+
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+    cursor: pointer;
+  }
+
+  #add {
+    background-color: #139f00;
+    color: white;
+
+    padding: 5px;
+    border-radius: 5px;
+    border: 2px solid #efefef;
+    cursor: pointer;
+  }
+
+  h1 {
+    position: relative;
+    animation: slide 10s infinite alternate;
+    color: orange;
+  }
+
+  @keyframes slide {
+    from {
+      left: 0px;
+    }
+
+    to {
+      left: 50px;
+    }
+  }
+
+  .status {
+    padding: 5px;
+    font-weight: bold;
+  }
+
+  .completed {
+    background-color: rgb(15, 253, 15);
+    color: rgb(0, 0, 0);
+  }
+
+  .in-progress {
+    background-color: rgb(237, 237, 19);
+    color: rgb(21, 20, 18);
+  }
+
+  .not-started {
+    background-color: rgb(255, 9, 9);
+    color: rgb(16, 14, 14);
+  }
+
+  .on-hold {
+    background-color: orange;
+    color: rgb(31, 26, 21);
+  }
+
+  .cancelled {
+    background-color: lightgray;
+    color: black;
+  }
+</style>
+
+<body>
+  <div class="main">
+    <h1>To-Do-List</h1>
+    <div class="form">
+      <input type="text" name="task" id="task" placeholder="Add a new task name" required />
+      <input type="description" name="descripiton" id="des" placeholder="Add a task description" row="4" cols="50"
+        required />
+
+      <input type="text" id="sdate" placeholder="DD-MM-YYYY(Start-Date)" onfocus="(this.type='date')" required />
+
+      <input type="text" id="edate" placeholder="DD-MM-YYYY(End-Date)" onfocus="this.type='date'" required />
+
+      <button  id="add" class="adit">Add Task</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+  <script>
+    let tasklist =
+      [
+        {
+          taskName: "",
+          taskDes: "",
+          startDate: "",
+          endDate: "",
+          status: "Select Status",
+        },
+      ] || [];
+
+    // render();
+
+    document.querySelector('.adit')
+    .addEventListener('click',()=>{
+      addTask();
+    })
+
+   /* document.body.addEventListener('keydown',(event)=>{
+      if(event.key==='e'){
+        addTask();
+
+      }
+      
+    })
+      */
+
+   
+    function render() {
+      let total = "";
+      for (let i = 0; i < tasklist.length; i++) {
+        const value = tasklist[i];
+
+        const { taskName, taskDes, startDate, endDate, status } = value;
+
+        if (!taskName || !taskDes || !startDate || !endDate) continue; //skip empty tasks i have used this
+        if(endDate<startDate){
+          alert('enddate is less than startdate')
+        }
+
+        const html = `
+            <div class="form2">
+              
+               <div style="text-decoration: ${value.status === "completed" ? "line-through" : "none"
+          }; text-decoration-color:${value.status === "completed" ? "red" : "none"
+          }"> ${taskName}</div>
+                <div style="text-decoration: ${value.status === "completed" ? "line-through" : "none"
+          }; text-decoration-color: ${value.status === "completed" ? "red" : "none"
+          }">${taskDes}</div> 
+                <div style="text-decoration: ${value.status === "completed" ? "line-through" : "none"
+          }; text-decoration-color:${value.status === "completed" ? "red" : "none"
+          }">${startDate}</div>
+                <div style="text-decoration: ${value.status === "completed" ? "line-through" : "none"
+          }; text-decoration-color:${value.status === "completed" ? "red" : "none"
+          }"> ${endDate}</div>
+               <div class="del"> <button class="dell">Delete</button></div>
+                <div class="edit"><button onclick="edit(${i});">Edit</button></div> 
+                
+ 
+                <div>  
+                    
+                
+
+                 
+        <select class="status ${value.status
+          }" onchange="saveStatus(${i}, this.value)">
+  <option value="Select Status" ${value.status === "Select Status" ? "selected" : ""
+          }>Select Status</option>
+  <option value="completed" ${value.status === "completed" ? "selected" : ""
+          }>Completed</option>
+  <option value="in-progress" ${value.status === "in-progress" ? "selected" : ""
+          }>In Progress</option>
+  <option value="not-started" ${value.status === "not-started" ? "selected" : ""
+          }>Not Started</option>
+  <option value="on-hold" ${value.status === "on-hold" ? "selected" : ""
+          }>On Hold</option>
+  <option value="cancelled" ${value.status === "cancelled" ? "selected" : ""
+          }>Cancelled</option>
+</select>
+
+            </div>
+               
+            </div>
+            `;
+        total += html;
+      }
+      document.querySelector("#result").innerHTML = `Task List: ${total}`;
+
+       document.querySelectorAll('.dell')
+    .forEach((deleteb,index)=>{
+      deleteb.addEventListener('click',()=>{
+        tasklist.splice(index,1);
+       
+        render();
+        local();
+
+      })
+    })
+
+    }
+    function local() {
+      localStorage.setItem("task", JSON.stringify(tasklist));
+    }
+    function addTask() {
+      let taskName = document.querySelector("#task").value;
+      let taskDes = document.querySelector("#des").value;
+      let startDate = document.querySelector("#sdate").value;
+      let endDate = document.querySelector("#edate").value;
+
+      if (
+        taskName === "" ||
+        taskDes === "" ||
+        startDate === "" ||
+        endDate === ""
+      ) {
+        alert("Please fill all the fields");
+        return;
+      }
+
+      tasklist.push({
+        taskName,
+        taskDes,
+        startDate,
+        endDate,
+        status: "Select Status",
+      });
+
+      document.querySelector("#task").value = "";
+      document.querySelector("#des").value = "";
+      document.querySelector("#sdate").value = "";
+      document.querySelector("#edate").value = "";
+
+      local();
+      render();
+    }
+
+    window.onload = function () {
+      let storedTask = localStorage.getItem("task");
+      if (storedTask) {
+        tasklist = JSON.parse(storedTask);
+        render();
+      } else {
+        document.querySelector("#result").innerHTML = "No task stored";
+      }
+    };
+    function edit(index) {
+      document.querySelector("#task").value = tasklist[index].taskName;
+      document.querySelector("#des").value = tasklist[index].taskDes;
+      document.querySelector("#sdate").value = tasklist[index].startDate;
+      document.querySelector("#edate").value = tasklist[index].endDate;
+      tasklist.splice(index, 1);
+      local();
+      render();
+    }
+    function saveStatus(index, status) {
+      tasklist[index].status = status;
+      local();
+      render();
+    }
+  </script>
+</body>
+
+</html>
